@@ -3,13 +3,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const swagger = require('./swagger')
-const todo = require('./routes/todo');
+require('dotenv').config()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
-const port = 5000;
+
 
 app.use(express.json())
 
@@ -23,8 +23,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 swagger(app)
-
-app.listen(port, () => {
-    console.log(`DeHoli SuperApp Backend listening on port  http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+    console.log(`DeHoli SuperApp Backend listening on port  http://localhost:${process.env.PORT}`);
 });
 module.exports = app;
