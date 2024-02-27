@@ -23,7 +23,5 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 swagger(app)
-app.listen(process.env.PORT, () => {
-    console.log(`DeHoli SuperApp Backend listening on port  http://localhost:${process.env.PORT}`);
-});
+console.log(`DeHoli SuperApp Backend listening on port  http://localhost:${process.env.PORT}`);
 module.exports = app;
