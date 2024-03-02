@@ -1,0 +1,44 @@
+swagger: "2.0"
+info: 
+  title: DeHoli Apis Documentations v1
+  description: Apis Documentations for DeHoli SuperApps
+  version: 1.0.0
+  contact: 
+    email: donihadimas.dev@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  servers:
+    url : "http://localhost:5000"
+termsOfService: http://swagger.io/terms/    
+schemes: [http]
+
+paths:
+  /pets:
+    get:
+      tags:
+        - PET
+      description: Returns all pets from the system that the user has access to
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: A list of pets.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/pet'
+  /pets-1:
+    get:
+      tags:
+        - PET
+      description: Returns all pets from the system that the user has access to
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: A list of pets.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/pet'            
