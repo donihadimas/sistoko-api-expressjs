@@ -2,11 +2,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const swagger = require('./swagger')
 require('dotenv').config()
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const YAML = require('yamljs')
+const swaggerjsDocs = YAML.load('./app/api/v1/api.yaml');
+const swaggerUi = require("swagger-ui-express");
 
 const app = express();
 
@@ -19,9 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs))
 
-swagger(app)
+
 console.log(`DeHoli SuperApp Backend listening on port  http://localhost:${process.env.PORT}`);
 module.exports = app;
