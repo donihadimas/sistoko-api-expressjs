@@ -30,10 +30,10 @@ app.use("/", (req, res) => {
             error_code: null,
             message: "Welcome to DeHoli SuperApp Backend",
             data: {
-                api_documentations: process.env.BASE_URL + process.env.SUB_URL
+                api_documentations: process.env.NODE_ENV == "production" ? process.env.BASE_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT + process.env.SUB_URL
             }
         }
     )
 })
-console.log(`DeHoli SuperApp Backend listening on port  http://localhost:${process.env.PORT}`);
+console.log(`DeHoli SuperApp Backend listening on port  ${process.env.NODE_ENV == "production" ? process.env.BASE_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT}`);
 module.exports = app;
