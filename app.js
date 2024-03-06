@@ -6,6 +6,8 @@ require('dotenv').config()
 const YAML = require('yamljs')
 const swaggerjsDocs = YAML.load('./app/api/v1/api.yaml');
 const swaggerUi = require("swagger-ui-express");
+const notFoundMiddleware = require('./app/middlewares/not-found');
+const handleErrorMiddleware = require('./app/middlewares/handle-error');
 
 const app = express();
 
@@ -17,6 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 // ? ROUTE
 const categoriesRouter = require("./app/api/v1/master-data/categories/router")
@@ -35,5 +39,9 @@ app.use("/", (req, res) => {
         }
     )
 })
+
+app.use(notFoundMiddleware);
+app.use(handleErrorMiddleware);
+
 console.log(`DeHoli SuperApp Backend listening on port  ${process.env.NODE_ENV == "production" ? process.env.BASE_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT}`);
 module.exports = app;

@@ -1,9 +1,11 @@
+const { BadRequestError, NotFoundError } = require('../../../../errors');
+const { getAllCategories, createCategories, getOneCategories, updateCategories, deleteCategories } = require('../../../../services/mongoose/categories');
 const Categories = require('./model')
-
 
 const index = async (req, res, next) => {
     try {
-        const result = await Categories.find();
+        const result = await getAllCategories();
+
         res.status(200).json({
             success: true,
             error_code: null,
@@ -17,8 +19,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const result = await Categories.findOne({ _id: id })
+        const result = await getOneCategories(req)
 
         res.status(200).json({
             success: true,
@@ -33,8 +34,7 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const { categoryName } = req.body
-        const result = await Categories.create({ categoryName })
+        const result = await createCategories(req);
 
         res.status(201).json({
             success: true,
@@ -49,14 +49,7 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const { categoryName } = req.body;
-
-        const result = await Categories.findOneAndUpdate(
-            { _id: id },
-            { categoryName },
-            { new: true, runValidators: true }
-        )
+        const result = await updateCategories(req)
 
         res.status(200).json({
             success: true,
@@ -69,10 +62,9 @@ const update = async (req, res, next) => {
     }
 }
 
-const destroy = async (req, res, next) =>{
+const destroy = async (req, res, next) => {
     try {
-        const {id} = req.params;
-        const result = await Categories.findOneAndDelete({ _id: id });
+        const result = await deleteCategories(req);
 
         res.status(200).json({
             success: true,
@@ -89,6 +81,6 @@ module.exports = {
     index,
     find,
     create,
-    update, 
+    update,
     destroy
 }
