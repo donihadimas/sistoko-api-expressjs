@@ -8,9 +8,11 @@ const swaggerjsDocs = YAML.load('./app/api/v1/api.yaml');
 const swaggerUi = require("swagger-ui-express");
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handle-error');
+const cors = require('cors')
+
 
 const app = express();
-
+app.use(cors())
 
 app.use(express.json())
 
