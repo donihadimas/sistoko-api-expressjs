@@ -1,16 +1,17 @@
-const { BadRequestError, NotFoundError } = require('../../../../errors');
 const { getAllCategories, createCategories, getOneCategories, updateCategories, deleteCategories } = require('../../../../services/mongoose/categories');
-const Categories = require('./model')
 
 const index = async (req, res, next) => {
     try {
-        const result = await getAllCategories();
+        const result = await getAllCategories(req);
 
         res.status(200).json({
             success: true,
             error_code: null,
-            message: "",
-            data: result
+            message: "Data kategori berhasil ditampilkan",
+            totalData: result?.totalData,
+            page: result?.page,
+            pageSize: result?.pageSize,
+            data: result?.categories,
         })
     } catch (error) {
         next(error)

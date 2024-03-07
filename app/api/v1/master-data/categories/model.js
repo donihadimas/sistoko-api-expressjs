@@ -9,6 +9,9 @@ let categorySchema = Schema(
       maxLength: [30, 'Panjang nama kategori maksimal 30 karakter'],
       required: [true, 'Nama kategori harus diisi'],
     },
+    totalProductInCategory: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
