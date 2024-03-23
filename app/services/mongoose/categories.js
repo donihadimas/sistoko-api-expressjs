@@ -25,7 +25,8 @@ const getAllCategories = async (req) => {
 
     const result = await Categories.find(query)
         .skip((page - 1) * pageSize)
-        .limit(pageSize);
+        .limit(pageSize)
+        .sort({createdAt: -1});
 
     return {
         totalData: totalCount,
