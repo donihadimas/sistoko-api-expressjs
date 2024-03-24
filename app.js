@@ -36,7 +36,7 @@ app.use("/", (req, res) => {
             error_code: null,
             message: "Welcome to DeHoli SuperApp Backend",
             data: {
-                api_documentations: process.env.NODE_ENV == "production_local" ? process.env.BASE_URL + ":" + process.env.PORT + process.env.SUB_URL : "production" ? process.env.BASE_URL_PROD + ":" + process.env.PORT + process.env.SUB_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT + process.env.SUB_URL
+                api_documentations: process.env.NODE_ENV == "production_local" ? process.env.BASE_URL + ":" + process.env.PORT + process.env.SUB_URL : "production" ? process.env.BASE_URL_PROD + process.env.SUB_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT + process.env.SUB_URL
             }
         }
     )
