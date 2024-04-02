@@ -36,7 +36,7 @@ app.use("/", (req, res) => {
             error_code: null,
             message: "Welcome to DeHoli SuperApp Backend",
             data: {
-                api_documentations: process.env.NODE_ENV == "production_local" ? process.env.BASE_URL + ":" + process.env.PORT + process.env.SUB_URL : process.env.NODE_ENV == "production" ? process.env.BASE_URL_PROD + process.env.SUB_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT + process.env.SUB_URL
+                api_documentations: process.env.NODE_ENV == "staging" ? process.env.BASE_URL + ":" + process.env.PORT + process.env.SUB_URL : process.env.NODE_ENV == "production" ? process.env.BASE_URL_PROD + process.env.SUB_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT + process.env.SUB_URL
             }
         }
     )
@@ -45,6 +45,6 @@ app.use("/", (req, res) => {
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);
 
-console.log(`DeHoli SuperApp Backend listening on port  ${process.env.NODE_ENV == "production_local" ? process.env.BASE_URL : process.env.NODE_ENV == "production" ? process.env.BASE_URL_PROD : process.env.BASE_URL_DEV + ":" + process.env.PORT}`);
+console.log(`DeHoli SuperApp Backend listening on port  ${process.env.NODE_ENV == "staging" ? process.env.BASE_URL : process.env.NODE_ENV == "production" ? process.env.BASE_URL_PROD : process.env.BASE_URL_DEV + ":" + process.env.PORT}`);
 console.log(process.env.NODE_ENV);
 module.exports = app;
