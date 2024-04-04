@@ -7,6 +7,11 @@ pipeline {
                 sh 'npm install --legacy-peer-deps' 
             }
         }
+        stage('Restart Stage') { 
+            steps {
+                sh 'docker container restart sistoko-api-production' 
+            }
+        }
     }
     post { 
         success {
