@@ -25,8 +25,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // ? ROUTE
-const categoriesRouter = require("./app/api/v1/master-data/categories/router")
+const categoriesRouter = require("./app/api/v1/master-data/categories/categoriesRouter")
+const employeesRouter = require("./app/api/v1/master-data/employees/employeesRouter")
+const rolesRouter = require("./app/api/v1/reference/roles/rolesRouter")
+
 app.use(process.env.SUB_URL, categoriesRouter);
+app.use(process.env.SUB_URL, employeesRouter);
+app.use(process.env.SUB_URL, rolesRouter);
 
 app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs))
 app.use("/", (req, res) => {
