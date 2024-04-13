@@ -3,8 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
-const YAML = require('yamljs')
-const swaggerjsDocs = YAML.load('./app/api/v1/api.yaml');
+const swaggerjsDocs = require('./app/api/v1/api.json')
 const swaggerUi = require("swagger-ui-express");
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handle-error');
