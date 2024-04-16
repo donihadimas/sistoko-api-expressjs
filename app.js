@@ -26,11 +26,13 @@ const categoriesRouter = require("./app/api/v1/master-data/categories/categories
 const employeesRouter = require("./app/api/v1/master-data/employees/employeesRouter")
 const rolesRouter = require("./app/api/v1/reference/roles/rolesRouter")
 const productRouter = require("./app/api/v1/master-data/product/productRouter")
+const supplierRouter = require("./app/api/v1/master-data/supplier/supplierRouter")
 
 app.use(process.env.SUB_URL, categoriesRouter);
 app.use(process.env.SUB_URL, employeesRouter);
 app.use(process.env.SUB_URL, rolesRouter);
 app.use(process.env.SUB_URL, productRouter);
+app.use(process.env.SUB_URL, supplierRouter);
 
 app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs))
 app.use("/", (req, res) => {
