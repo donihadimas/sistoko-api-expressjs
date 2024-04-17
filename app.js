@@ -3,12 +3,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
-const swaggerjsDocs = require('./app/api/v1/api.json')
+const swaggerjsDocs = require('./app/api/v1/apiDocs');
 const swaggerUi = require("swagger-ui-express");
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handle-error');
 const cors = require('cors')
-
 
 const app = express();
 app.use(cors())
@@ -19,20 +18,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ? define router
+const router = require('./app/api/v1/mainRouter')
+app.use(process.env.SUB_URL, router.categoriesRouter);
+app.use(process.env.SUB_URL, router.employeesRouter);
+app.use(process.env.SUB_URL, router.rolesRouter);
+app.use(process.env.SUB_URL, router.productRouter);
+app.use(process.env.SUB_URL, router.supplierRouter);
 
+// ? serve api documentation with swagger
+app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs.apiDocs))
 
-// ? ROUTE
-const categoriesRouter = require("./app/api/v1/master-data/categories/categoriesRouter")
-const employeesRouter = require("./app/api/v1/master-data/employees/employeesRouter")
-const rolesRouter = require("./app/api/v1/reference/roles/rolesRouter")
-const productRouter = require("./app/api/v1/master-data/product/productRouter")
-
-app.use(process.env.SUB_URL, categoriesRouter);
-app.use(process.env.SUB_URL, employeesRouter);
-app.use(process.env.SUB_URL, rolesRouter);
-app.use(process.env.SUB_URL, productRouter);
-
-app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs))
 app.use("/", (req, res) => {
     res.status(200).json(
         {
