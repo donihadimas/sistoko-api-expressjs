@@ -4,6 +4,15 @@ const productDoc = require('./master-data/product/productDoc')
 const supplierDoc = require('./master-data/supplier/supplierDoc')
 const rolesDoc = require('./reference/roles/rolesDoc')
 
+let urlServer;
+
+if (process.env.NODE_ENV == "development") {
+    urlServer = `${process.env.BASE_URL_DEV}:${process.env.PORT}/{basePath}`;
+} else if (process.env.NODE_ENV === "staging") {
+    urlServer = `${process.env.BASE_URL}:${process.env.PORT}/{basePath}`;
+} else {
+    urlServer = `${process.env.BASE_URL_PROD}/{basePath}`;
+}
 
 const apiDocs = {
     "openapi": "3.1.0",
@@ -23,26 +32,8 @@ const apiDocs = {
     },
     "servers": [
         {
-            "url": `${process.env.BASE_URL_DEV}:${process.env.PORT}/{basePath}`,
-            "description": "The development API server",
-            "variables": {
-                "basePath": {
-                    "default": "api/v1"
-                }
-            }
-        },
-        {
-            "url": `${process.env.BASE_URL}:${process.env.PORT}/{basePath}`,
-            "description": "The staging API server",
-            "variables": {
-                "basePath": {
-                    "default": "api/v1"
-                }
-            }
-        },
-        {
-            "url": `${process.env.BASE_URL_PROD}/{basePath}`,
-            "description": "The production API server",
+            "url": urlServer,
+            "description": `The ${process.env.NODE_ENV} API server`,
             "variables": {
                 "basePath": {
                     "default": "api/v1"
