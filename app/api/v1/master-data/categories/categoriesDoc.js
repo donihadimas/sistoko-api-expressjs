@@ -97,7 +97,7 @@ const paths = {
             "requestBody": {
                 "required": true,
                 "content": {
-                    "application/json": {
+                    "multipart/form-data": {
                         "schema": {
                             "$ref": "#/components/schemas/CreateOrUpdateCategories"
                         },
@@ -388,6 +388,10 @@ const schemas = {
             },
             "totalProductInCategory": {
                 "type": "number"
+            },
+            "categoryImage": {
+                "type": "string",
+                "format": "binary"
             }
         }
     },

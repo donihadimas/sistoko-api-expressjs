@@ -12,6 +12,12 @@ let categorySchema = Schema(
     totalProductInCategory: {
       type: Number,
     },
+    filePath: {
+      type: String,
+    },
+    fileName: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

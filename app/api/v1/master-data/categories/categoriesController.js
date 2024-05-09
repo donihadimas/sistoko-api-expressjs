@@ -1,4 +1,7 @@
+const { BadRequestError } = require('../../../../errors');
+const { uploadFiletoMinio } = require('../../../../services/minio/minioClient');
 const { getAllCategories, createCategories, getOneCategories, updateCategories, deleteCategories } = require('../../../../services/mongoose/categoriesServices');
+const { generateUUID } = require('../../../../utils/helper');
 
 const index = async (req, res, next) => {
     try {
@@ -35,8 +38,28 @@ const find = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const result = await createCategories(req);
-
+        const { file } = req;
+        let result;
+        if (file) {
+            console.log("create ~ file:", file)
+            const filename = generateUUID();
+            const allowedMimeTypes = ["image/png", "image/jpg", "image/jpeg"];
+            const isAllowedMimeType = allowedMimeTypes.includes(file.mimetype);
+            if (!isAllowedMimeType) {
+                throw new BadRequestError(
+                    `File ${file.originalname} has unsupported type ${file.mimeType}. Only ${allowedMimeTypes.join(", ")} are allowed`
+                );
+            }
+            const uploadedFile = await uploadFiletoMinio(file, filename);
+            if (!uploadedFile) {
+                throw new BadRequestError(
+                    "Failed to upload file to server. Please try again later"
+                );
+            }
+            result = await createCategories(req, file.originalname, filename);
+        } else {
+            result = await createCategories(req);
+        }
         res.status(201).json({
             success: true,
             error_code: null,
