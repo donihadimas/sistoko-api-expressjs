@@ -1,0 +1,17 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2021": true,
+    "node": true,
+    "mongo": true
+  },
+  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "import/newline-after-import": "off",
+    "radix": "off",
+    "linebreak-style": "off"
+  }
+}
