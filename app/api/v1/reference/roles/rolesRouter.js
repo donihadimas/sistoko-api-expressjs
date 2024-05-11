@@ -1,5 +1,5 @@
-const express = require("express")
-const { create, index, find, update, destroy } = require("./rolesController")
+const express = require("express");
+const { create, index, find, update, destroy } = require("./rolesController");
 const router = express()
 
 router.get('/roles', index);

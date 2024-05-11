@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+
 const { model, Schema } = mongoose;
 
-let categorySchema = Schema(
+const categorySchema = Schema(
   {
     categoryName: {
       type: String,
@@ -12,6 +13,12 @@ let categorySchema = Schema(
     totalProductInCategory: {
       type: Number,
     },
+    filePath: {
+      type: String,
+    },
+    fileName: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

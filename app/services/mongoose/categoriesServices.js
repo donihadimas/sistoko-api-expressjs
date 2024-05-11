@@ -46,14 +46,14 @@ const getOneCategories = async (req) => {
     return result;
 }
 
-const createCategories = async (req) => {
+const createCategories = async (req, fileName = null, filePath = null) => {
     const { categoryName, totalProductInCategory } = req.body;
 
     const checkCategory = await CategoriesModel.findOne({ categoryName });
 
     if (checkCategory) throw new BadRequestError("Kategori sudah ada");
 
-    const result = await CategoriesModel.create({ categoryName, totalProductInCategory })
+    const result = await CategoriesModel.create({ categoryName, totalProductInCategory, fileName, filePath })
     return result
 }
 

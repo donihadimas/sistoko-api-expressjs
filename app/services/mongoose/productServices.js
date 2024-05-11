@@ -1,5 +1,5 @@
 const ProductModel = require('../../api/v1/master-data/product/productModel')
-const { BadRequestError, NotFoundError } = require("../../errors")
+const { NotFoundError } = require("../../errors")
 
 const getAllProduct = async (req) => {
     const { page, pageSize, search } = req.query;

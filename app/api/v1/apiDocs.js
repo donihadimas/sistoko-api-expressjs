@@ -6,7 +6,7 @@ const rolesDoc = require('./reference/roles/rolesDoc')
 
 let urlServer;
 
-if (process.env.NODE_ENV == "development") {
+if (process.env.NODE_ENV === "development") {
     urlServer = `${process.env.BASE_URL_DEV}:${process.env.PORT}/{basePath}`;
 } else if (process.env.NODE_ENV === "staging") {
     urlServer = `${process.env.BASE_URL}:${process.env.PORT}/{basePath}`;

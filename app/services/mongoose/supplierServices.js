@@ -1,5 +1,5 @@
-const SupplierModel = require('../../api/v1/master-data/supplier/supplierModel')
-const { BadRequestError, NotFoundError } = require("../../errors")
+const SupplierModel = require('../../api/v1/master-data/supplier/supplierModel');
+const { NotFoundError } = require("../../errors");
 
 const getAllSupplier = async (req) => {
     const { page, pageSize, search } = req.query;
