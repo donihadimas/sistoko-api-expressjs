@@ -1,6 +1,8 @@
-const express = require("express")
+const express = require("express");
+
 const { create, index, find, update, destroy } = require("./categoriesController");
 const { uploadMulter } = require("../../../../services/multer/multerService");
+
 const router = express()
 
 router.get('/categories', index);

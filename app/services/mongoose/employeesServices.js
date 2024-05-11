@@ -1,5 +1,5 @@
 const EmployeesModel = require('../../api/v1/master-data/employees/employeesModel')
-const { BadRequestError, NotFoundError } = require("../../errors")
+const { NotFoundError } = require("../../errors")
 
 const getAllEmployees = async (req) => {
     const { page, pageSize, search } = req.query;

@@ -8,10 +8,10 @@ const index = async (req, res, next) => {
             success: true,
             error_code: null,
             message: "Data karyawan berhasil ditampilkan",
-            totalData: result?.totalData,
-            page: result?.page,
-            pageSize: result?.pageSize,
-            data: result?.employees,
+            totalData: result.totalData,
+            page: result.page,
+            pageSize: result.pageSize,
+            data: result.employees,
         })
     } catch (error) {
         next(error)

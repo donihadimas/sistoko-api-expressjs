@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { model, Schema } = mongoose;
 
-let supplierSchema = Schema(
+const supplierSchema = Schema(
     {
         supplierName: {
             type: String,

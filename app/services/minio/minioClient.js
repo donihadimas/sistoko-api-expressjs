@@ -15,9 +15,8 @@ const uploadFiletoMinio = async (file, filename) => {
         });
         return result
     } catch (error) {
-        console.log("uploadFiletoMinio ~ error:", error)
+        return error
     }
-
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
-RolesModel = require("../../api/v1/reference/roles/rolesModel");
-const { BadRequestError, NotFoundError } = require("../../errors")
+const RolesModel = require("../../api/v1/reference/roles/rolesModel");
+const { NotFoundError } = require("../../errors")
 
 const getAllRoles = async (req) => {
     const { page, pageSize, search } = req.query;

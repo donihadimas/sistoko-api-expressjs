@@ -11,10 +11,10 @@ const index = async (req, res, next) => {
             success: true,
             error_code: null,
             message: "Data kategori berhasil ditampilkan",
-            totalData: result?.totalData,
-            page: result?.page,
-            pageSize: result?.pageSize,
-            data: result?.categories,
+            totalData: result.totalData,
+            page: result.page,
+            pageSize: result.pageSize,
+            data: result.categories,
         })
     } catch (error) {
         next(error)
@@ -41,7 +41,6 @@ const create = async (req, res, next) => {
         const { file } = req;
         let result;
         if (file) {
-            console.log("create ~ file:", file)
             const filename = generateUUID();
             const allowedMimeTypes = ["image/png", "image/jpg", "image/jpeg"];
             const isAllowedMimeType = allowedMimeTypes.includes(file.mimetype);
