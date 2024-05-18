@@ -1,13 +1,14 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
-const swaggerjsDocs = require('./app/api/v1/apiDocs');
 const swaggerUi = require("swagger-ui-express");
+const cors = require('cors')
+const swaggerjsDocs = require('./app/api/v1/apiDocs');
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handle-error');
-const cors = require('cors')
 
 const app = express();
 app.use(cors())
@@ -25,9 +26,19 @@ app.use(process.env.SUB_URL, router.employeesRouter);
 app.use(process.env.SUB_URL, router.rolesRouter);
 app.use(process.env.SUB_URL, router.productRouter);
 app.use(process.env.SUB_URL, router.supplierRouter);
+app.use(process.env.SUB_URL, router.menuRouter);
 
 // ? serve api documentation with swagger
 app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs.apiDocs))
+
+let apiDocumentations;
+if (process.env.NODE_ENV === "staging") {
+    apiDocumentations = `${process.env.BASE_URL}:${process.env.PORT}${process.env.SUB_URL}`;
+} else if (process.env.NODE_ENV === "production") {
+    apiDocumentations = process.env.BASE_URL_PROD + process.env.SUB_URL
+} else {
+    apiDocumentations = `${process.env.BASE_URL_DEV}:${process.env.PORT}${process.env.SUB_URL}`;
+}
 
 app.use("/", (req, res) => {
     res.status(200).json(
@@ -36,7 +47,7 @@ app.use("/", (req, res) => {
             error_code: null,
             message: "Welcome to DeHoli SuperApp Backend",
             data: {
-                api_documentations: process.env.NODE_ENV == "staging" ? process.env.BASE_URL + ":" + process.env.PORT + process.env.SUB_URL : process.env.NODE_ENV == "production" ? process.env.BASE_URL_PROD + process.env.SUB_URL : process.env.BASE_URL_DEV + ":" + process.env.PORT + process.env.SUB_URL
+                api_documentations: apiDocumentations,
             }
         }
     )
@@ -45,6 +56,7 @@ app.use("/", (req, res) => {
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);
 
-console.log(`DeHoli SuperApp Backend listening on port  ${process.env.NODE_ENV == "staging" ? process.env.BASE_URL : process.env.NODE_ENV == "production" ? process.env.BASE_URL_PROD : process.env.BASE_URL_DEV + ":" + process.env.PORT}`);
+// eslint-disable-next-line no-nested-ternary
+console.log(`DeHoli SuperApp Backend listening on port  ${process.env.NODE_ENV === "staging" ? process.env.BASE_URL : process.env.NODE_ENV === "production" ? process.env.BASE_URL_PROD : `${process.env.BASE_URL_DEV}:${process.env.PORT}`}`);
 console.log(process.env.NODE_ENV);
 module.exports = app;
