@@ -3,6 +3,7 @@ const employeesDoc = require('./master-data/employees/employeesDoc')
 const productDoc = require('./master-data/product/productDoc')
 const supplierDoc = require('./master-data/supplier/supplierDoc')
 const rolesDoc = require('./reference/roles/rolesDoc')
+const menuDoc = require('./reference/menu/menuDoc')
 
 let urlServer;
 
@@ -46,7 +47,8 @@ const apiDocs = {
         ...employeesDoc.paths,
         ...productDoc.paths,
         ...supplierDoc.paths,
-        ...rolesDoc.paths
+        ...rolesDoc.paths,
+        ...menuDoc.paths
     },
     "components": {
         "securitySchemes": {
@@ -98,6 +100,17 @@ const apiDocs = {
                     "type": "string",
                     "nullable": true
                 }
+            },
+            "filtered": {
+                "name": "filtered",
+                "in": "query",
+                "required": false,
+                "description": "Show Filtered Menu",
+                "schema": {
+                    "type": "boolean",
+                    "default": false,
+                    "nullable": true
+                }
             }
         },
         "schemas": {
@@ -105,7 +118,8 @@ const apiDocs = {
             ...employeesDoc.schemas,
             ...productDoc.schemas,
             ...supplierDoc.schemas,
-            ...rolesDoc.schemas
+            ...rolesDoc.schemas,
+            ...menuDoc.schemas
         }
     }
 }
