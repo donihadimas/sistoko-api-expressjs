@@ -9,6 +9,7 @@ const cors = require('cors')
 const swaggerjsDocs = require('./app/api/v1/apiDocs');
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handle-error');
+const mainRouter = require('./app/api/v1/mainRouter')
 
 const app = express();
 app.use(cors())
@@ -20,13 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ? define router
-const router = require('./app/api/v1/mainRouter')
-app.use(process.env.SUB_URL, router.categoriesRouter);
-app.use(process.env.SUB_URL, router.employeesRouter);
-app.use(process.env.SUB_URL, router.rolesRouter);
-app.use(process.env.SUB_URL, router.productRouter);
-app.use(process.env.SUB_URL, router.supplierRouter);
-app.use(process.env.SUB_URL, router.menuRouter);
+app.use(mainRouter);
 
 // ? serve api documentation with swagger
 app.use("/api/v1", swaggerUi.serve, swaggerUi.setup(swaggerjsDocs.apiDocs))

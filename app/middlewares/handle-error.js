@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const errorHandlerMiddleware = (err, req, res,) => {
+const errorHandlerMiddleware = (err, req, res) => {
   const customError = {
     // set default
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
@@ -24,7 +24,13 @@ const errorHandlerMiddleware = (err, req, res,) => {
     customError.statusCode = 404;
   }
 
-  return res.status(customError.statusCode).json({ message: customError.message });
+  return res.status(customError.statusCode).json(
+    {
+      success: false,
+      statusCode: customError.statusCode,
+      message: customError.message
+    }
+  );
 };
 
 module.exports = errorHandlerMiddleware;
