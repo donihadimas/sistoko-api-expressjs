@@ -4,6 +4,9 @@ const productDoc = require('./master-data/product/productDoc')
 const supplierDoc = require('./master-data/supplier/supplierDoc')
 const rolesDoc = require('./reference/roles/rolesDoc')
 const menuDoc = require('./reference/menu/menuDoc')
+const permissionsDoc = require('./reference/permissions/permissionDoc')
+const usersDoc = require('./users/usersDoc')
+const authDoc = require('./auth/authDoc')
 
 let urlServer;
 
@@ -43,12 +46,15 @@ const apiDocs = {
         }
     ],
     "paths": {
+        ...authDoc.paths,
         ...categoriesDoc.paths,
         ...employeesDoc.paths,
+        ...menuDoc.paths,
         ...productDoc.paths,
-        ...supplierDoc.paths,
+        ...permissionsDoc.paths,
         ...rolesDoc.paths,
-        ...menuDoc.paths
+        ...supplierDoc.paths,
+        ...usersDoc.paths,
     },
     "components": {
         "securitySchemes": {
@@ -114,12 +120,15 @@ const apiDocs = {
             }
         },
         "schemas": {
+            ...authDoc.schemas,
             ...categoriesDoc.schemas,
             ...employeesDoc.schemas,
+            ...menuDoc.schemas,
             ...productDoc.schemas,
-            ...supplierDoc.schemas,
+            ...permissionsDoc.schemas,
             ...rolesDoc.schemas,
-            ...menuDoc.schemas
+            ...supplierDoc.schemas,
+            ...usersDoc.schemas,
         }
     }
 }
