@@ -7,9 +7,12 @@ const rolesSchema = Schema(
       type: String,
       required: [true, 'Nama jabatan harus diisi'],
     },
-    permissions: {
-      type: String,
-    },
+    permissionsId: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Permissions",
+      }
+    ],
   },
   { timestamps: true }
 );

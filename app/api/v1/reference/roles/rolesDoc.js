@@ -71,7 +71,9 @@ const paths = {
                                             {
                                                 "_id": "65f1af5e67333070b7bfb124",
                                                 "rolesName": "Administrator",
-                                                "permissions": "CRUD",
+                                                "permissionsId": [
+                                                    "37846234"
+                                                ],
                                                 "createdAt": "2024-03-13T13:51:26.130Z",
                                                 "updatedAt": "2024-03-13T13:51:26.130Z",
                                                 "__v": 0
@@ -184,7 +186,9 @@ const paths = {
                                         "data": {
                                             "_id": "65f1af5e67333070b7bfb124",
                                             "rolesName": "Administrator",
-                                            "permissions": "CRUD",
+                                            "permissionsId": [
+                                                "37846234"
+                                            ],
                                             "createdAt": "2024-03-13T13:51:26.130Z",
                                             "updatedAt": "2024-03-13T13:51:26.130Z",
                                             "__v": 0
@@ -308,9 +312,11 @@ const schemas = {
                 "type": "string",
                 "required": true
             },
-            "permissions": {
-                "type": "string",
-                "required": true
+            "permissionsId": {
+                "type": "array",
+                'items': {
+                    'type': 'string',
+                }
             },
             "createdAt": {
                 "type": "string"
@@ -330,9 +336,11 @@ const schemas = {
                 "type": "string",
                 "required": true
             },
-            "permissions": {
-                "type": "string",
-                "required": true
+            "permissionsId": {
+                "type": "array",
+                'items': {
+                    'type': 'string',
+                }
             }
         }
     },

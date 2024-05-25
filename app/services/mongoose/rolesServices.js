@@ -12,7 +12,7 @@ const getAllRoles = async (req) => {
         const allRoles = await RolesModel.find(query);
         return {
             totalData: allRoles.length,
-            employees: allRoles,
+            data: allRoles,
         };
     }
 
@@ -24,6 +24,7 @@ const getAllRoles = async (req) => {
     const totalCount = await RolesModel.countDocuments(query);
 
     const result = await RolesModel.find(query)
+        .populate("permissionsId")
         .skip((page - 1) * pageSize)
         .limit(pageSize)
         .sort({ createdAt: -1 });
@@ -32,7 +33,7 @@ const getAllRoles = async (req) => {
         totalData: totalCount,
         page,
         pageSize,
-        roles: result,
+        data: result,
     };
 }
 
@@ -40,6 +41,7 @@ const getOneRoles = async (req) => {
 
     const { id } = req.params;
     const result = await RolesModel.findOne({ _id: id })
+        .populate("permissionsId")
 
     if (!result) throw new NotFoundError(`Id Roles Tidak ditemukan`)
 
@@ -47,19 +49,19 @@ const getOneRoles = async (req) => {
 }
 
 const createRoles = async (req) => {
-    const { rolesName, permissions } = req.body;
+    const { rolesName, permissionsId } = req.body;
 
-    const result = await RolesModel.create({ rolesName, permissions })
+    const result = await RolesModel.create({ rolesName, permissionsId })
     return result;
 }
 
 const updateRoles = async (req) => {
     const { id } = req.params;
-    const { rolesName, permissions } = req.body;
+    const { rolesName, permissionsId } = req.body;
 
     const result = await RolesModel.findOneAndUpdate(
         { _id: id },
-        { rolesName, permissions },
+        { rolesName, permissionsId },
         { new: true, runValidators: true }
     )
 

@@ -11,7 +11,7 @@ const index = async (req, res, next) => {
             totalData: result.totalData,
             page: result.page,
             pageSize: result.pageSize,
-            data: result.roles,
+            data: result.data,
         })
     } catch (error) {
         next(error)
