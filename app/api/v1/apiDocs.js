@@ -59,10 +59,10 @@ const apiDocs = {
     "components": {
         "securitySchemes": {
             "Auth": {
-                "description": "Authentication for DeHoli RESTful API",
-                "type": "apiKey",
-                "in": "header",
-                "name": "X-API-Key"
+                "description": "JWT Authentication for DeHoli RESTful API",
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         },
         "parameters": {

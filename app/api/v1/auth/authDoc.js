@@ -21,7 +21,7 @@ const paths = {
             },
             "responses": {
                 "201": {
-                    "description": "Success create auth/login",
+                    "description": "Success authentication",
                     "content": {
                         "application/json": {
                             "schema": {
