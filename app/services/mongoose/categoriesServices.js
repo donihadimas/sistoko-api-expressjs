@@ -1,25 +1,19 @@
 const CategoriesModel = require('../../api/v1/master-data/categories/categoriesModel')
 const { BadRequestError, NotFoundError } = require("../../errors");
 const { CategoryMessages, GeneralMessages } = require('../../utils/const/message');
+const { buildQuery } = require('../../utils/query');
 
 const getAllCategories = async (req) => {
     const { page, pageSize, search } = req.query;
 
+    const query = buildQuery(search, ['categoryName']);
+
     if (!page || !pageSize) {
-        let query = {};
-        if (search) {
-            query = { categoryName: { $regex: new RegExp(search, "i") } };
-        }
         const allCategories = await CategoriesModel.find(query);
         return {
             totalData: allCategories.length,
             data: allCategories,
         };
-    }
-
-    let query = {};
-    if (search) {
-        query = { categoryName: { $regex: new RegExp(search, "i") } };
     }
 
     const totalCount = await CategoriesModel.countDocuments(query);
