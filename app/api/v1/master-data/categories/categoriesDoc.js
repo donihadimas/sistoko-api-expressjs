@@ -312,7 +312,7 @@ const paths = {
             "description": "Delete existing categories in database",
             "parameters": [
                 {
-                    "$ref": "#/components/parameters/CategoriesId"
+                    "$ref": "#/components/parameters/Id"
                 }
             ],
             "responses": {

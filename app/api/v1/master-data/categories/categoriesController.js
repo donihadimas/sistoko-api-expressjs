@@ -1,21 +1,19 @@
+const { StatusCodes } = require('http-status-codes');
 const { BadRequestError } = require('../../../../errors');
 const { uploadFiletoMinio } = require('../../../../services/minio/minioClient');
 const { getAllCategories, createCategories, getOneCategories, updateCategories, deleteCategories } = require('../../../../services/mongoose/categoriesServices');
 const { generateUUID } = require('../../../../utils/helper');
+const { sendSuccessResponse } = require('../../../../utils/response');
+const { GeneralMessages } = require('../../../../utils/const/message');
 
 const index = async (req, res, next) => {
     try {
         const result = await getAllCategories(req);
-
-        res.status(200).json({
-            success: true,
-            error_code: null,
-            message: "Data kategori berhasil ditampilkan",
-            totalData: result.totalData,
-            page: result.page,
-            pageSize: result.pageSize,
-            data: result.categories,
-        })
+        sendSuccessResponse(res, {
+            message: GeneralMessages.SuccessDisplayData,
+            statusCode: StatusCodes.OK,
+            data: result,
+        });
     } catch (error) {
         next(error)
     }
@@ -25,12 +23,11 @@ const find = async (req, res, next) => {
     try {
         const result = await getOneCategories(req)
 
-        res.status(200).json({
-            success: true,
-            error_code: null,
-            message: "",
-            data: result
-        })
+        sendSuccessResponse(res, {
+            message: GeneralMessages.SuccessDisplayData,
+            statusCode: StatusCodes.OK,
+            data: result,
+        });
     } catch (error) {
         next(error)
     }
@@ -40,6 +37,7 @@ const create = async (req, res, next) => {
     try {
         const { file } = req;
         let result;
+
         if (file) {
             const filename = generateUUID();
             const allowedMimeTypes = ["image/png", "image/jpg", "image/jpeg"];
@@ -56,15 +54,18 @@ const create = async (req, res, next) => {
                 );
             }
             result = await createCategories(req, file.originalname, filename);
+
         } else {
             result = await createCategories(req);
+
         }
-        res.status(201).json({
-            success: true,
-            error_code: null,
-            message: "Kategori Berhasil ditambahkan",
-            data: result
-        })
+
+        sendSuccessResponse(res, {
+            message: GeneralMessages.SuccessCreateData,
+            statusCode: StatusCodes.CREATED,
+            data: result,
+        });
+
     } catch (error) {
         next(error)
     }
@@ -72,14 +73,15 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+
         const result = await updateCategories(req)
 
-        res.status(200).json({
-            success: true,
-            error_code: null,
-            message: "Kategori Berhasil diubah",
-            data: result
-        })
+        sendSuccessResponse(res, {
+            message: GeneralMessages.SuccessUpdateData,
+            statusCode: StatusCodes.OK,
+            data: result,
+        });
+
     } catch (error) {
         next(error)
     }
@@ -89,12 +91,11 @@ const destroy = async (req, res, next) => {
     try {
         const result = await deleteCategories(req);
 
-        res.status(200).json({
-            success: true,
-            error_code: null,
-            message: "Kategori Berhasil dihapus",
-            data: result
-        })
+        sendSuccessResponse(res, {
+            message: GeneralMessages.SuccessDeleteData,
+            statusCode: StatusCodes.OK,
+            data: result,
+        });
     } catch (error) {
         next(error)
     }

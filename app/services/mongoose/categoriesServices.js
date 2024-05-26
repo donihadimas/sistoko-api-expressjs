@@ -1,5 +1,6 @@
 const CategoriesModel = require('../../api/v1/master-data/categories/categoriesModel')
-const { BadRequestError, NotFoundError } = require("../../errors")
+const { BadRequestError, NotFoundError } = require("../../errors");
+const { CategoryMessages, GeneralMessages } = require('../../utils/const/message');
 
 const getAllCategories = async (req) => {
     const { page, pageSize, search } = req.query;
@@ -12,7 +13,7 @@ const getAllCategories = async (req) => {
         const allCategories = await CategoriesModel.find(query);
         return {
             totalData: allCategories.length,
-            categories: allCategories,
+            data: allCategories,
         };
     }
 
@@ -32,7 +33,7 @@ const getAllCategories = async (req) => {
         totalData: totalCount,
         page,
         pageSize,
-        categories: result,
+        data: result,
     };
 }
 
@@ -40,9 +41,7 @@ const getOneCategories = async (req) => {
 
     const { id } = req.params;
     const result = await CategoriesModel.findOne({ _id: id })
-
-    if (!result) throw new NotFoundError(`Id Kategori tidak ditemukan`)
-
+    if (!result) throw new NotFoundError(GeneralMessages.IdNotFound)
     return result;
 }
 
@@ -51,9 +50,10 @@ const createCategories = async (req, fileName = null, filePath = null) => {
 
     const checkCategory = await CategoriesModel.findOne({ categoryName });
 
-    if (checkCategory) throw new BadRequestError("Kategori sudah ada");
+    if (checkCategory) throw new BadRequestError(CategoryMessages.CategoryAlreadyExist);
 
     const result = await CategoriesModel.create({ categoryName, totalProductInCategory, fileName, filePath })
+
     return result
 }
 
@@ -65,7 +65,7 @@ const updateCategories = async (req) => {
         _id: id,
         categoryName,
     })
-    if (checkCategory) throw new BadRequestError("Kategori sudah ada")
+    if (checkCategory) throw new BadRequestError(CategoryMessages.CategoryAlreadyExist);
 
 
     const result = await CategoriesModel.findOneAndUpdate(
@@ -74,7 +74,7 @@ const updateCategories = async (req) => {
         { new: true, runValidators: true }
     )
 
-    if (!result) throw new NotFoundError(`Id Kategori tidak ditemukan`);
+    if (!result) throw new NotFoundError(GeneralMessages.IdNotFound);
 
     return result;
 }
@@ -84,7 +84,7 @@ const deleteCategories = async (req) => {
 
     const result = await CategoriesModel.findOneAndDelete({ _id: id })
 
-    if (!result) throw new NotFoundError(`Id Kategori tidak ditemukan`);
+    if (!result) throw new NotFoundError(GeneralMessages.IdNotFound);
 
     return result;
 }
