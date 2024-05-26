@@ -1,11 +1,16 @@
+/* eslint-disable prefer-const */
+/* eslint-disable consistent-return */
 const { StatusCodes } = require('http-status-codes');
-const errorHandlerMiddleware = (err, req, res) => {
-  const customError = {
-    // set default
+const errorHandlerMiddleware = (err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  let customError = {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     message: err.message || 'Something went wrong try again later',
   };
-  // error validation dari mongoose
+
   if (err.name === 'ValidationError') {
     customError.message = Object.values(err.errors)
       .map((item) => item.message)
@@ -24,13 +29,13 @@ const errorHandlerMiddleware = (err, req, res) => {
     customError.statusCode = 404;
   }
 
-  return res.status(customError.statusCode).json(
-    {
-      success: false,
+  res.status(customError.statusCode).json({
+    success: false,
+    error: {
       statusCode: customError.statusCode,
-      message: customError.message
-    }
-  );
+      message: customError.message,
+    },
+  });
 };
 
 module.exports = errorHandlerMiddleware;
