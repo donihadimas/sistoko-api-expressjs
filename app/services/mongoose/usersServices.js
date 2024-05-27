@@ -1,26 +1,39 @@
 const UsersModel = require('../../api/v1/users/usersModel')
-const { NotFoundError, BadRequestError } = require("../../errors")
+const RolesModel = require('../../api/v1/reference/roles/rolesModel')
+const { NotFoundError, BadRequestError } = require("../../errors");
+const { buildQuery } = require('../../utils/query');
 
 const getAllUsers = async (req) => {
-    const { page, pageSize, search } = req.query;
+    const { page, pageSize, search = '' } = req.query;
+
+    const query = buildQuery(search, ['fullName', 'userName', 'rolesName']);
+
+    // ? search by role
+    if (query) {
+        const matchingRoles = await RolesModel.find(query).select('_id');
+        const roleIds = matchingRoles.map(role => role._id);
+        if (!query.$or) {
+            query.$or = [];
+        }
+        if (roleIds.length > 0) {
+            query.$or.push({ roleId: { $in: roleIds } });
+        }
+    }
 
     if (!page || !pageSize) {
-        let query = {};
-        if (search) {
-            query = { fullName: { $regex: new RegExp(search, "i") } };
-        }
-        const allUsers = await UsersModel.find(query);
+        const allUsers = await UsersModel.find(query)
+            .sort({ createdAt: -1 })
+            .populate({
+                path: 'roleId',
+                populate: {
+                    path: 'permissionsId'
+                }
+            })
         return {
             totalData: allUsers.length,
             data: allUsers,
         };
     }
-
-    let query = {};
-    if (search) {
-        query = { fullName: { $regex: new RegExp(search, "i") } };
-    }
-
     const totalCount = await UsersModel.countDocuments(query);
 
     const result = await UsersModel.find(query)

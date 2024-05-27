@@ -23,6 +23,8 @@ const AuthMessages = {
     FailureChangePassword: "Password Gagal diubah",
     SuccessLogin: "Login Berasil dilakukan",
     FailureLogin: "Login Gagal dilakukan",
+    SuccessRegister: "Register Berasil dilakukan",
+    FailureRegister: "Register Gagal dilakukan",
     InvalidCredential: "Kredensial Tidak Valid",
     InvalidAuthentication: "Autentikasi Tidak Valid",
     InvalidToken: "Token Tidak Valid",
