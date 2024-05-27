@@ -49,9 +49,9 @@ const getOneRoles = async (req) => {
 }
 
 const createRoles = async (req) => {
-    const { rolesName, permissionsId } = req.body;
+    const { rolesName } = req.body;
 
-    const result = await RolesModel.create({ rolesName, permissionsId })
+    const result = await RolesModel.create({ rolesName })
     return result;
 }
 

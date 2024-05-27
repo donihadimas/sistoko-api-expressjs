@@ -101,7 +101,7 @@ const paths = {
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "#/components/schemas/CreateOrUpdateRoles"
+                            "$ref": "#/components/schemas/CreateRoles"
                         }
                     }
                 }
@@ -220,7 +220,7 @@ const paths = {
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "#/components/schemas/CreateOrUpdateRoles"
+                            "$ref": "#/components/schemas/UpdateRoles"
                         }
                     }
                 }
@@ -329,7 +329,16 @@ const schemas = {
             }
         }
     },
-    "CreateOrUpdateRoles": {
+    "CreateRoles": {
+        "type": "object",
+        "properties": {
+            "rolesName": {
+                "type": "string",
+                "required": true
+            },
+        }
+    },
+    "UpdateRoles": {
         "type": "object",
         "properties": {
             "rolesName": {

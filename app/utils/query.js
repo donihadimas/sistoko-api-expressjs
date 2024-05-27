@@ -5,7 +5,7 @@ const buildQuery = (search, fields) => {
         }));
         return { $or: searchConditions };
     }
-    return {};
+    return null;
 }
 module.exports = {
     buildQuery

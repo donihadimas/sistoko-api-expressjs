@@ -40,7 +40,7 @@ const createPermissions = async (req) => {
 
     const result = await permissionsModel.create({ roleId, menuId, permissions })
 
-    const updateRole = await rolesModel.findOneAndUpdate(
+    await rolesModel.findOneAndUpdate(
         { _id: roleId },
         { $push: { permissionsId: result._id } }, // ? add permission in role collection
         { new: true, runValidators: true }
